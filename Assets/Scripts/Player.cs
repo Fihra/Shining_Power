@@ -11,8 +11,14 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     public Collider2D bc;
 
+    public GameObject projectile;
+
     [Range(10.0f, 200.0f)]
     public float speed = 100f;
+
+    public float secondsPerAttack = 1f;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +26,13 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<Collider2D>();
         isMoving = false;
+        InvokeRepeating("Attack", 1.0f, secondsPerAttack);
+    }
+
+    void Attack()
+    {
+        Vector2 projectilePosition = new Vector2(transform.position.x, transform.position.y + 1);
+        Instantiate(projectile, projectilePosition, Quaternion.identity);
     }
 
     // Update is called once per frame

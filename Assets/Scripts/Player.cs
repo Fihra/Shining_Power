@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     private float height;
     private bool isMoving;
     private Vector3 startPos;
-    //public Rigidbody2D rb;
+    private Rigidbody2D rb;
     public Collider2D bc;
 
     [Range(10.0f, 200.0f)]
@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<Collider2D>();
         isMoving = false;
     }
@@ -52,8 +52,16 @@ public class Player : MonoBehaviour
 
                     
             }
-
             //TouchMovement();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            Debug.Log(collision.gameObject);
+            rb.velocity = Vector2.zero;
         }
     }
 

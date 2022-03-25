@@ -76,6 +76,11 @@ public class Player : MonoBehaviour
             Debug.Log(collision.gameObject);
             rb.velocity = Vector2.zero;
         }
+
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(gameObject);
+        }
     }
 
     //void TouchMovement()

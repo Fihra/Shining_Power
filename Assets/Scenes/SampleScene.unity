@@ -489,7 +489,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &2112480846
 MonoBehaviour:
@@ -504,7 +504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 404881071}
-  speed: 1
+  speed: 4.7
 --- !u!1001 &3076240220719914887
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -530,7 +530,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1360857011035575378, guid: fecfa82207d92634280ed8630a5e6526, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.41
+      value: 5.12
       objectReference: {fileID: 0}
     - target: {fileID: 1360857011035575378, guid: fecfa82207d92634280ed8630a5e6526, type: 3}
       propertyPath: m_LocalPosition.z

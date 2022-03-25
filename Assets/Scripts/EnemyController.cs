@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
     Rigidbody2D rb;
     public Transform target;
 
-    [Range(0.01f, 10.0f)]
+    [Range(1.0f, 100.0f)]
     public float speed = 50.0f;
 
     // Start is called before the first frame update

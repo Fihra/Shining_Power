@@ -23,6 +23,7 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(spawnTime);
         elapsedTime += Time.deltaTime;
         if(enemies.Count >= 0 && enemies.Count < 10)
         {

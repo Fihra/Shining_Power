@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     private Vector3 startPos;
     private Rigidbody2D rb;
     public Collider2D bc;
+    private bool prepareToFire;
+    private bool toggleShoot;
 
     public GameObject projectile;
 
@@ -26,12 +28,13 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<Collider2D>();
         isMoving = false;
-        InvokeRepeating("Attack", 1.0f, secondsPerAttack);
+        //InvokeRepeating("Attack", 1.0f, secondsPerAttack);
     }
 
-    void Attack()
+    void Attack(Vector3 touchPos)
     {
-        Vector2 projectilePosition = new Vector2(transform.position.x, transform.position.y + 1);
+        //Vector2 projectilePosition = new Vector2(transform.position.x, transform.position.y + 1);
+        Vector2 projectilePosition = new Vector2(touchPos.x, touchPos.y);
         Instantiate(projectile, projectilePosition, Quaternion.identity);
     }
 
@@ -42,6 +45,7 @@ public class Player : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
             Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+            Debug.Log(Input.touchCount);
             switch (touch.phase)
             {
                 case TouchPhase.Began:
@@ -49,18 +53,32 @@ public class Player : MonoBehaviour
                     if(bc == touchedCollider)
                     {
                         isMoving = true;
-                    }                   
+                    }
+                    else
+                    {
+                        prepareToFire = true;
+                        toggleShoot = true;
+                    }
+
                     break;
                 case TouchPhase.Moved:
                     if(isMoving)
                     {
                         transform.position = new Vector2(touchPosition.x, touchPosition.y);
-                        //startPos = touchPosition * speed * Time.deltaTime;
-                        //rb.MovePosition(rb.transform.position + startPos);
+                    }
+                    if(prepareToFire)
+                    {
+                        if(toggleShoot == true)
+                        {
+                            Attack(touchPosition);
+                        }
+                        toggleShoot = false;
+                        
                     }
                     break;
                 case TouchPhase.Ended:
                     isMoving = false;
+                    prepareToFire = false;
                     break;
 
                     

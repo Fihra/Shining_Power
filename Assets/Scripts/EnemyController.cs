@@ -15,9 +15,6 @@ public class EnemyController : MonoBehaviour
     [Range(0.01f, 10.0f)]
     public float secondsToAttack = 1f;
 
-    [Range(0.05f, 10.0f)]
-    public float shotSpeed = 1.0f;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -34,8 +31,7 @@ public class EnemyController : MonoBehaviour
     void Shooting()
     {
         Vector2 projectilePosition = shootingNozzle.transform.position;
-        GameObject shot = Instantiate(projectile, projectilePosition, Quaternion.identity);
-        shot.transform.position = projectilePosition + Vector2.down * shotSpeed * Time.deltaTime;
+        Instantiate(projectile, projectilePosition, Quaternion.identity);
     }
 
     void Moving()

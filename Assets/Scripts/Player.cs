@@ -109,5 +109,10 @@ public class Player : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if(collision.gameObject.CompareTag("EnemyBullet"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

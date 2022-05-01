@@ -30,7 +30,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.43, y: 6.52, z: 0}
   m_LocalScale: {x: 0.4, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2775851127358282095}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -97,8 +98,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f007d03bd91964fadf57cb6303854d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  speed: 35.4
+  target: {fileID: 6755354851746411247, guid: 6365771c075dd0a4a92a8fab0d40b268, type: 3}
+  projectile: {fileID: 1977577252753818370, guid: 6365771c075dd0a4a92a8fab0d40b268, type: 3}
+  shootingNozzle: {fileID: 5467810688638686664}
+  moveSpeed: 6.9
+  secondsToAttack: 1
+  shotSpeed: 0.36
 --- !u!61 &5979283706011590984
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -146,3 +151,33 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!1 &5467810688638686664
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2775851127358282095}
+  m_Layer: 0
+  m_Name: ShotNozzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2775851127358282095
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5467810688638686664}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.16, y: -0.466, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1360857011035575378}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

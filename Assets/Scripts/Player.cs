@@ -13,14 +13,18 @@ public class Player : MonoBehaviour
     private bool prepareToFire;
     private bool toggleShoot;
 
+    private List<TouchLocations> touches = new List<TouchLocations>();
+    private List<int> touchIDs = new List<int>();
+
+    private int movingID;
+    private int shootingID;
+
     public GameObject projectile;
 
     [Range(10.0f, 200.0f)]
     public float speed = 100f;
 
     public float secondsPerAttack = 1f;
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -33,57 +37,63 @@ public class Player : MonoBehaviour
 
     void Attack(Vector3 touchPos)
     {
-        //Vector2 projectilePosition = new Vector2(transform.position.x, transform.position.y + 1);
         Vector2 projectilePosition = new Vector2(touchPos.x, touchPos.y);
         Instantiate(projectile, projectilePosition, Quaternion.identity);
+    }
+
+    private Vector3 OutputScreenToWorld(Touch touchInput)
+    {
+        return Camera.main.ScreenToWorldPoint(touchInput.position);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(Input.touchCount > 0)
+        int i = 0;
+
+        while (i < Input.touchCount)
         {
-            Touch touch = Input.GetTouch(0);
-            Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
-            Debug.Log(Input.touchCount);
+            Touch touch = Input.GetTouch(i);
+            Vector3 touchPosition = OutputScreenToWorld(touch);
+
             switch (touch.phase)
             {
                 case TouchPhase.Began:
                     Collider2D touchedCollider = Physics2D.OverlapPoint(touchPosition);
-                    if(bc == touchedCollider)
+                    touchIDs.Add(touch.fingerId);
+                    if (bc == touchedCollider)
                     {
                         isMoving = true;
+                        movingID = touchIDs.Find(tID => tID == touch.fingerId);
                     }
                     else
                     {
                         prepareToFire = true;
                         toggleShoot = true;
+                        shootingID = touchIDs.Find(tID => tID == touch.fingerId);
                     }
-
                     break;
                 case TouchPhase.Moved:
-                    if(isMoving)
+                    if (isMoving && movingID == touch.fingerId)
                     {
                         transform.position = new Vector2(touchPosition.x, touchPosition.y);
                     }
-                    if(prepareToFire)
+                    if (prepareToFire && shootingID == touch.fingerId)
                     {
-                        if(toggleShoot == true)
+                        if (toggleShoot == true)
                         {
                             Attack(touchPosition);
                         }
                         toggleShoot = false;
-                        
+
                     }
                     break;
                 case TouchPhase.Ended:
                     isMoving = false;
                     prepareToFire = false;
                     break;
-
-                    
             }
-            //TouchMovement();
+            i++;
         }
     }
 
@@ -100,13 +110,4 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    //void TouchMovement()
-    //{
-    //    Touch touch = Input.GetTouch(0);
-    //    Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
-    //    touchPosition = touchPosition * speed * Time.deltaTime;
-    //    rb.MovePosition(rb.transform.position + touchPosition);
-    //}
-
 }

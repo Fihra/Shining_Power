@@ -20,7 +20,7 @@ public class Projectile : MonoBehaviour
         Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
         transform.position = currentPos + Vector2.up * speed * Time.deltaTime;
 
-        if(transform.position.y >= 6.0f)
+        if (transform.position.y >= 6.0f)
         {
             Destroy(gameObject);
         }

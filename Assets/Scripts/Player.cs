@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private float width;
-    private float height;
     private bool isMoving;
-    private Vector3 startPos;
     private Rigidbody2D rb;
     public Collider2D bc;
     private bool prepareToFire;
     private bool toggleShoot;
+    protected int maxHealth = 100;
+    protected static int currentHealth = 100;
 
-    private List<TouchLocations> touches = new List<TouchLocations>();
     private List<int> touchIDs = new List<int>();
 
     private int movingID;
@@ -25,6 +23,34 @@ public class Player : MonoBehaviour
     public float speed = 100f;
 
     public float secondsPerAttack = 1f;
+
+    public void AddToHealth()
+    {
+        if(currentHealth >= 100)
+        {
+            currentHealth = maxHealth;
+        }
+        else
+        {
+            currentHealth += 10;
+        }
+    }
+
+    public int OutputHealth()
+    {
+        return currentHealth; 
+    }
+
+    public void TakeDamage(int damageTaken)
+    {
+        if(currentHealth <= 0)
+        {
+            currentHealth = 0;
+        }else
+        {
+            currentHealth -= damageTaken;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -46,7 +72,6 @@ public class Player : MonoBehaviour
         return Camera.main.ScreenToWorldPoint(touchInput.position);
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         int i = 0;
@@ -77,9 +102,6 @@ public class Player : MonoBehaviour
                     if (isMoving && movingID == touch.fingerId)
                     {
                         transform.position = new Vector2(touchPosition.x, touchPosition.y);
-                        //rb.MovePosition(new Vector2(touchPosition.x, touchPosition.y));
-
-                        //rb.AddForce(new Vector2(touchPosition.x, touchPosition.y));
                     }
                     if (prepareToFire && shootingID == touch.fingerId)
                     {
@@ -129,12 +151,29 @@ public class Player : MonoBehaviour
 
         if(collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
+            if(currentHealth > 0)
+            {
+                TakeDamage(3);
+                Debug.Log(currentHealth);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+            
         }
 
         if(collision.gameObject.CompareTag("EnemyBullet"))
         {
-            Destroy(gameObject);
+            if (currentHealth > 0)
+            {
+                TakeDamage(5);
+                Debug.Log(currentHealth);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

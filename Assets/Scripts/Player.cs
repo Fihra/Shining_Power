@@ -77,6 +77,9 @@ public class Player : MonoBehaviour
                     if (isMoving && movingID == touch.fingerId)
                     {
                         transform.position = new Vector2(touchPosition.x, touchPosition.y);
+                        //rb.MovePosition(new Vector2(touchPosition.x, touchPosition.y));
+
+                        //rb.AddForce(new Vector2(touchPosition.x, touchPosition.y));
                     }
                     if (prepareToFire && shootingID == touch.fingerId)
                     {
@@ -89,6 +92,25 @@ public class Player : MonoBehaviour
                     }
                     break;
                 case TouchPhase.Ended:
+                    if (isMoving)
+                    {
+                        if(transform.position.x < -2.60f)
+                        {
+                            transform.position = new Vector2(-2.52f, transform.position.y);
+                        }
+                        if(transform.position.x > 2.60f)
+                        {
+                            transform.position = new Vector2(2.52f, transform.position.y);
+                        }
+                        if (transform.position.y < -4.00f)
+                        {
+                            transform.position = new Vector2(transform.position.x, -4.01f);
+                        }
+                        if (transform.position.y > 4.81f)
+                        {
+                            transform.position = new Vector2(transform.position.x, 4.80f);
+                        }
+                    }
                     isMoving = false;
                     prepareToFire = false;
                     break;

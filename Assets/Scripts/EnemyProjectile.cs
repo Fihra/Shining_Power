@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour
 {
-    [Range(0.05f, 10.0f)]
-    public float shotSpeed = 1.0f;
+    [Range(0.0005f, 5.0f)]
+    public float shotSpeed = 0.05f;
     private Rigidbody2D rb;
 
     // Start is called before the first frame update
@@ -18,7 +18,7 @@ public class EnemyProjectile : MonoBehaviour
     void Update()
     {
         Vector2 projectilePosition = new Vector2(transform.position.x, transform.position.y);
-        transform.position = projectilePosition + Vector2.down * shotSpeed * Time.deltaTime;
+        transform.position = projectilePosition + shotSpeed * Time.deltaTime * Vector2.down;
 
         if (transform.position.y <= -5.0f)
         {
